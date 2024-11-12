@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.adoyo.snoozeloo"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.adoyo.snoozeloo"
@@ -56,4 +56,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //splashScreen
+    implementation(libs.androidx.core.splashscreen)
 }
