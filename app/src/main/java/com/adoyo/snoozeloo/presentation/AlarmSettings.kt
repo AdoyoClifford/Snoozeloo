@@ -1,6 +1,8 @@
 package com.adoyo.snoozeloo.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
@@ -25,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -121,6 +126,68 @@ fun AlarmSettings(modifier: Modifier = Modifier) {
             }
         }
 
+    }
+}
+
+@Composable
+fun WeekSelector(
+    modifier: Modifier = Modifier,
+    selectedDays: Set<Int> = emptySet(),
+    onDaySelected: (Int) -> Unit
+) {
+    val daysOfWeek = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = "Repeat",
+            style = TextStyle(
+                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                fontWeight = FontWeight(600)
+            )
+        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            daysOfWeek.forEachIndexed { index, day ->
+                val isSelected = selectedDays.contains(index)
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
+                        .border(
+                            width = 1.dp,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary,
+                            shape = CircleShape
+                        )
+                ) {
+                    Text(
+                        text = day,
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+}
+
+@Preview
+@Composable
+fun PreviewWeekSelector() {
+    SnoozelooTheme {
+        WeekSelector(
+            selectedDays = setOf(0, 1, 2, 3, 4, 5, 6),
+            onDaySelected = {}
+        )
     }
 }
 
