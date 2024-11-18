@@ -1,6 +1,5 @@
 package com.adoyo.snoozeloo.presentation
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,10 +22,16 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adoyo.snoozeloo.R
 import com.adoyo.snoozeloo.ui.theme.SnoozelooTheme
 
 @Composable
@@ -42,6 +46,7 @@ fun AlarmSettings(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
             .background(
                 color = MaterialTheme.colorScheme.surface
             )
@@ -87,13 +92,33 @@ fun AlarmSettings(modifier: Modifier = Modifier) {
         ) {
             Text(
                 "Alarm Name",
-                style = TextStyle(fontFamily = MaterialTheme.typography.bodyLarge.fontFamily)
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                    fontWeight = FontWeight(600)
+                )
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 "Work",
-                style = TextStyle(fontFamily = MaterialTheme.typography.bodyLarge.fontFamily)
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                    fontWeight = FontWeight(600)
+                ),
+                modifier = Modifier.alpha(0.5f)
             )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Repeat")
+                Spacer(modifier = Modifier.weight(1f))
+
+            }
         }
 
     }
