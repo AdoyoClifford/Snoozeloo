@@ -113,18 +113,7 @@ fun AlarmSettings(modifier: Modifier = Modifier) {
             )
         }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "Repeat")
-                Spacer(modifier = Modifier.weight(1f))
-
-            }
-        }
+        WeekSelector {  }
 
     }
 }
@@ -158,7 +147,7 @@ fun WeekSelector(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .size(36.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(16.dp))
                         .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                         .border(
                             width = 1.dp,
@@ -180,7 +169,7 @@ fun WeekSelector(
 
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewWeekSelector() {
     SnoozelooTheme {
