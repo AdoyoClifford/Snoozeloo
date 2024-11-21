@@ -9,9 +9,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -24,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.adoyo.snoozeloo.ui.theme.SnoozelooTheme
+import com.adoyo.snoozeloo.ui.theme.bluePrimary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,12 +37,13 @@ fun AlarmScreen() {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {  },
-                containerColor = MaterialTheme.colorScheme.primary // Purple color
+                onClick = { },
+                containerColor = bluePrimary
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Alarm", tint = Color.White)
             }
-        }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -54,7 +57,7 @@ fun AlarmScreen() {
                 imageVector = Icons.Default.Alarm,
                 contentDescription = "Alarm Icon",
                 modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.primary
+                tint = bluePrimary
             )
 
             Spacer(modifier = Modifier.height(16.dp)) // Spacing
@@ -74,5 +77,5 @@ fun AlarmScreen() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    AlarmScreen()
+    SnoozelooTheme { AlarmScreen() }
 }
