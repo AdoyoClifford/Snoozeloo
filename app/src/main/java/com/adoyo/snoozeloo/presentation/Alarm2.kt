@@ -1,8 +1,15 @@
 package com.adoyo.snoozeloo.presentation
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,6 +23,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -24,6 +32,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +41,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adoyo.snoozeloo.ui.theme.bluePrimary
+import com.adoyo.snoozeloo.ui.theme.blueSecondary
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +66,7 @@ fun AlarmCreationScreen() {
                 navigationIcon = {
                     IconButton(onClick = { /* Handle back navigation */ }) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Default.Close,
+                            imageVector = Icons.Default.Close,
                             contentDescription = "Close"
                         )
                     }
@@ -171,20 +181,13 @@ fun AlarmCreationScreen() {
 
                 Text("Alarm volume")
                 Spacer(Modifier.width(8.dp))
-                Slider(
+                LineSlider(
                     value = volume,
                     onValueChange = { volume = it },
-                    modifier = Modifier.weight(1f),
-                    colors = SliderDefaults.colors(
-                        thumbColor = bluePrimary, // Purple color
-                        activeTrackColor = bluePrimary, // Purple color
-                        inactiveTrackColor = bluePrimary.copy(alpha = 0.5f) // Purple color
-                    )
-
-
+                    valueRange = 0f..1f,
+                    steps = 5,
+                    thumbDisplay = { value -> "${(value * 100).toInt()}%" }
                 )
-
-
             }
 
             // Vibrate
@@ -194,7 +197,15 @@ fun AlarmCreationScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Vibrate")
-                Switch(checked = vibrate, onCheckedChange = { vibrate = it })
+                Switch(
+                    checked = vibrate, onCheckedChange = { vibrate = it },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = bluePrimary,
+                        uncheckedThumbColor = Color.White,
+                        uncheckedTrackColor = Color.LightGray
+                    )
+                )
             }
 
         }
@@ -202,6 +213,41 @@ fun AlarmCreationScreen() {
 
 }
 
+@Composable
+fun LineSlider(
+    value: Float,
+    onValueChange: (Float) -> Unit,
+    valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+    steps: Int = 0,
+    thumbDisplay: (Float) -> String = { "" },
+    modifier: Modifier = Modifier
+) {
+    val animatedValue by animateFloatAsState(
+        targetValue = value,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy),
+        label = "animatedValue"
+    )
+
+    Slider(
+        value = animatedValue,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        valueRange = valueRange,
+        steps = steps
+    )
+}
+
+@Preview
+@Composable
+fun LineSliderPreview() {
+    LineSlider(
+        value = 0.5f,
+        onValueChange = {},
+        valueRange = 0f..1f,
+        steps = 0,
+        thumbDisplay = { value -> "$value" }
+    )
+}
 
 
 @Preview(showBackground = true)
