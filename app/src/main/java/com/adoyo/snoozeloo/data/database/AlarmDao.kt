@@ -9,7 +9,7 @@ import com.adoyo.snoozeloo.domain.model.Alarm
 @Dao
 interface AlarmDao {
     @Upsert
-    fun addAlarm(alarm: Alarm)
+    fun upsertAlarm(alarm: Alarm)
 
     @Query("SELECT * FROM alarm")
     fun getAlarms(): List<Alarm>

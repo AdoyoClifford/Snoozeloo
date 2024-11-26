@@ -7,7 +7,7 @@ data class AlarmEntity(
     val id: Int,
     val time: String,
     //val repeat: String,
-   // val label: String,
+   // val label: String,2
     val enabled: Boolean,
     val timeLeft: String
 )
