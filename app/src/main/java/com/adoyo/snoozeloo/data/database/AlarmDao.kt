@@ -4,20 +4,21 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.adoyo.snoozeloo.domain.model.Alarm
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface AlarmDao {
     @Upsert
-    fun upsertAlarm(alarm: Alarm)
+    suspend fun upsertAlarm(alarm: Alarm)
 
     @Query("SELECT * FROM alarm")
-    fun getAlarms(): List<Alarm>
+    fun getAlarms(): Flow<List<Alarm>>
 
     @Query("SELECT * FROM alarm WHERE id = :id")
-    fun getAlarm(id: Int): Alarm
+    suspend fun getAlarm(id: Int): Alarm
 
     @Query("DELETE FROM alarm WHERE id = :id")
-    fun removeAlarm(id: Int)
+    suspend fun removeAlarm(id: Int)
 
 }
